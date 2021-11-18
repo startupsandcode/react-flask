@@ -1,35 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Navigation from './components/Navigation';
+import Header from './components/Header';
 
+export const UserContext = React.createContext();
+  
 function App() {
-  const [currentTime, setCurrentTime] = useState(0);
-
-  useEffect(() => {
-    setInterval(() => {
-    fetch('/api/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    });
-    }, 1000);
-  }, []);
+  const [username, setUsername] = useState(null);
+  
+  const currentUser = {
+    username: username,
+    loginUser: (_username) => { setUsername(_username); },
+    logoutUser: () => { setUsername(null); },
+  }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p>The current time is {currentTime}.</p>
-      </header>
+      <UserContext.Provider value={currentUser}>
+        <Navigation />
+        <Header />
+      </UserContext.Provider>
     </div>
   );
 }
