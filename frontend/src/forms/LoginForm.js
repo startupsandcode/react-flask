@@ -10,7 +10,7 @@ export default function LoginForm() {
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    axios.post('/api/login', {
+    axios.post('/api/auth/login', {
         username: username.current.value,
         password: password.current.value
     }).then(res => {
