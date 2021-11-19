@@ -1,9 +1,11 @@
 from flask import Flask, request
 import bcrypt
 from auth import bp
+from api import db
+from auth.models import User
 
 # Temporary Storage of Users
-users = []
+#users = []
 
 def get_hashed_password(plain_text_password):
     # Hash a password for the first time
@@ -18,15 +20,16 @@ def check_password(plain_text_password, hashed_password):
 def login_user():
     userdata = request.get_json()
     username = userdata['username']
-    password = userdata['password']
-    for user in users:
-        if user['username'] == username:
-            if check_password(password, user['password']):
-                return {'success':True}
-            else:
-                return {'success':False}
+    password = userdata['password'].encode('utf-8')
+    user = User.query.filter_by(username=username).first()
+    if user and check_password(password, user.password.encode('utf-8')):
+        return {'success':True}
+    elif user and not check_password(password, user.password.encode('utf-8')):
+        return {'success':False}
     hashedpassword = get_hashed_password(password)
     userdata['password'] = hashedpassword
-    users.append({'username':userdata['username'], 'password':hashedpassword})
-    print(users)
+    newUser = User(username=username, password=hashedpassword, email="test@test.com")
+    db.session.add(newUser)
+    db.session.commit()
+    #users.append({'username':userdata['username'], 'password':hashedpassword})
     return {'success':True}

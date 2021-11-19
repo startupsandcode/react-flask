@@ -68,3 +68,20 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+## Setting up MySql for this Application
+
+Install MySql
+
+```
+brew install mysql
+```
+Set Root password
+```
+mysqladmin -u root password NEWPASSWORD
+```
+Install a good UI (I recommend Sequel ACE)
+https://apps.apple.com/us/app/sequel-ace/id1518036000?ls=1
+
+
