@@ -84,4 +84,8 @@ mysqladmin -u root password NEWPASSWORD
 Install a good UI (I recommend Sequel ACE)
 https://apps.apple.com/us/app/sequel-ace/id1518036000?ls=1
 
-
+Created a .env.local file with your database/secrets as you need.
+```
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://USER:PASSWORD@localhost:3306/YOURDB'
+```
+I create tuts for my db
