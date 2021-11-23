@@ -1,7 +1,6 @@
 import React from 'react';
 import { UserContext } from '../App.js';
 import axios from 'axios';
-import { Redirect } from 'react'
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 
 export default function RegisterForm() {
