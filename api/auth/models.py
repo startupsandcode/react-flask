@@ -7,13 +7,12 @@ import os
 class User(db.Model):
     
     def generate_auth_token(self, expiration = 600):
-        s = Serializer(os.environ.get('SECRET_KEY'), expires_in = expiration)
+        s = Serializer(app.config['SECRET_KEY'], expires_in = expiration)
         return s.dumps({ 'id': self.id })
 
     @staticmethod
     def verify_auth_token(token):
-        #s = Serializer(app.config['SECRET_KEY'])
-        s = Serializer(os.environ.get('SECRET_KEY'))
+        s = Serializer(app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
         except SignatureExpired:

@@ -14,6 +14,9 @@ app.register_blueprint(auth_bp)
 from main import bp as main_bp
 app.register_blueprint(main_bp)
 
+from clock import bp as clock_bp
+app.register_blueprint(clock_bp)
+
 # @app.shell_context_processor
 # def make_shell_context():
 #     return {'db': db, 'User': User}

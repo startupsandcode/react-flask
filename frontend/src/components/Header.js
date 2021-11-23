@@ -6,12 +6,15 @@ export default function Header() {
     const currentUser = React.useContext(UserContext);
     const [currentTime, setCurrentTime] = useState(0);
     useEffect(() => {
-        setInterval(() => {
-            fetch('/api/time').then(res => res.json()).then(data => {
-                setCurrentTime(data.time);
-            });
-        }, 100000)
-    }, []);
+        if (currentUser.username) {
+            const intervalId = setInterval(() => {
+                fetch('/api/clock', { headers: new Headers({ 'Authorization': 'Bearer ' + currentUser.token }) }).then(res => res.json()).then(data => {
+                    setCurrentTime(data.time);
+                });
+            }, 1000)
+            return () => window.clearInterval(intervalId );
+        }
+    }, [currentUser]);
 
     return (
         <div>
@@ -36,10 +39,10 @@ export default function Header() {
                 </>
                 :
                 <>
-                <p>Please login</p>
-                <header className="App-header">
+                    <p>Please login</p>
+                    <header className="App-header">
                         <img src={logo} className="App-logo" alt="logo" />
-                </header>
+                    </header>
                 </>
             }
         </div>
