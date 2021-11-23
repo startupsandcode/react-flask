@@ -1,4 +1,4 @@
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `username` char(64) NOT NULL DEFAULT '',
   `email` char(120) NOT NULL DEFAULT '',
@@ -6,4 +6,4 @@ CREATE TABLE `users` (
   `is_active` smallint NOT NULL DEFAULT '1',
   `last_updated` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
