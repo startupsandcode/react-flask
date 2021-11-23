@@ -10,7 +10,7 @@ export default function Header() {
             fetch('/api/time').then(res => res.json()).then(data => {
                 setCurrentTime(data.time);
             });
-        }, 1000)
+        }, 100000)
     }, []);
 
     return (
