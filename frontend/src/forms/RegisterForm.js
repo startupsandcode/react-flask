@@ -2,7 +2,7 @@ import React from 'react';
 import { UserContext } from '../App.js';
 import axios from 'axios';
 import { Redirect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 
 export default function RegisterForm() {
   const username = React.useRef();
@@ -14,14 +14,13 @@ export default function RegisterForm() {
 
   const onSubmit = (ev) => {
       ev.preventDefault();
-
       axios.post('/api/register', {
         username: username.current.value,
         password: password.current.value,
         email: email.current.value
       }).then(res => {
         if (res.data.success) {
-          navigate('/')
+          currentUser.loginUser(username.current.value, res.data.token);
         } else {
           console.log('fail')
           currentUser.loginUser(null);
@@ -51,7 +50,7 @@ export default function RegisterForm() {
           <Link to='/'>Login</Link>
         </>
         :
-        <Redirect to='/' />
+        <Navigate to='/' />
       }
     </div>
   );
