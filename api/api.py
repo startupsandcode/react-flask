@@ -1,8 +1,6 @@
 from flask import Flask, request
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
-#from auth.models import User
-#from api import create_app, db
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -16,7 +14,3 @@ app.register_blueprint(main_bp)
 
 from clock import bp as clock_bp
 app.register_blueprint(clock_bp)
-
-# @app.shell_context_processor
-# def make_shell_context():
-#     return {'db': db, 'User': User}

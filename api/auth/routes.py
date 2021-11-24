@@ -1,8 +1,9 @@
 from flask import Flask, request, g, jsonify
 import bcrypt
+from flask_sqlalchemy import SQLAlchemy
 from auth import bp
 from api import db
-from auth.models import User
+from auth.models import User, Role
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 
 password_auth = HTTPBasicAuth()
@@ -64,3 +65,20 @@ def register_user():
 def get_auth_token():
     token = g.user.generate_auth_token()
     return jsonify({ 'token': token.decode('ascii') })
+
+@bp.route('/users')
+@token_auth.login_required
+def get_users():
+    users = User.query.all()
+    return jsonify({ 'users': [user.serialize for user in users] })
+
+@bp.route('/users/<int:id>')
+def get_user(id):
+    user = User.query.get(id)
+    return jsonify({ 'user': user.serialize })
+
+@bp.route('/roles')
+@token_auth.login_required
+def get_users_roles():
+    roles = Role.query.all()
+    return jsonify({ 'roles': [role.serialize for role in roles] })
