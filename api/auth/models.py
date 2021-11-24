@@ -70,4 +70,4 @@ class Role(db.Model):
 class RevokedTokens(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     token = db.Column(db.String(256))
-    expiration = db.Column(db.DateTime)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
