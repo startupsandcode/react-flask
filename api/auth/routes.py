@@ -77,8 +77,17 @@ def get_user(id):
     user = User.query.get(id)
     return jsonify({ 'user': user.serialize })
 
-@bp.route('/roles')
+@bp.route('/user_roles')
 @token_auth.login_required
 def get_users_roles():
     roles = Role.query.all()
     return jsonify({ 'roles': [role.serialize for role in roles] })
+
+@bp.route('/roles')
+@token_auth.login_required
+def get_roles():
+    roles = Role.query.with_entities(Role.id, Role.name).all()
+    result = []
+    for id,name in roles:
+        result.append({'id':id, 'name':name})
+    return jsonify(result)

@@ -11,6 +11,8 @@ class User(db.Model):
 
     @staticmethod
     def verify_auth_token(token):
+        if RevokedTokens.query.filter_by(token=token).first() is not None:
+            return None
         s = Serializer(app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
@@ -64,3 +66,8 @@ class Role(db.Model):
             'role_name': self.name,
             'users': [user.serialize for user in self.users]
         }
+
+class RevokedTokens(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(256))
+    expiration = db.Column(db.DateTime)
